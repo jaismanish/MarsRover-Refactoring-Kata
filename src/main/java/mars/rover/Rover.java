@@ -1,21 +1,24 @@
 package mars.rover;
 
-public class MarsRover {
+public class Rover {
     private int x;
     private int y;
     private final int plateauUpperX;
     private final int plateauUpperY;
     private char direction;
 
-    public MarsRover(int x, int y, char direction, int plateauUpperX, int plateauUpperY) {
-        if(x > plateauUpperX || x < 0 || y > plateauUpperY || y < 0) {
-            throw new IllegalArgumentException("Rover's coordinate can't be outside of plateau");
-        }
+    public Rover(int x, int y, char direction, int plateauUpperX, int plateauUpperY) {
+        validateCoordinates(x, y, plateauUpperX, plateauUpperY);
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.plateauUpperX = plateauUpperX;
         this.plateauUpperY = plateauUpperY;
+    }
+    private void validateCoordinates(int x, int y, int plateauUpperX, int plateauUpperY) {
+        if (x < 0 || x > plateauUpperX || y < 0 || y > plateauUpperY) {
+            throw new IllegalArgumentException("Invalid coordinates for rover. Out of plateau boundaries.");
+        }
     }
 
     public void move(String instructions) {
@@ -30,7 +33,7 @@ public class MarsRover {
         }
     }
 
-    private void turnLeft() {
+    public void turnLeft() {
         switch (direction) {
             case 'N':
                 direction = 'W';
@@ -47,7 +50,7 @@ public class MarsRover {
         }
     }
 
-    private void turnRight() {
+    public void turnRight() {
         switch (direction) {
             case 'N':
                 direction = 'E';
@@ -64,7 +67,7 @@ public class MarsRover {
         }
     }
 
-    private void moveForward() {
+    public void moveForward() {
         switch (direction) {
             case 'N':
                 if (y < plateauUpperY) y++;
